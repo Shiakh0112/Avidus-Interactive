@@ -12,5 +12,11 @@ app.use('/api/tasks', require('./routes/tasks'));
 app.use('/api/admin', require('./routes/admin'));
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`)))
-  .catch(err => console.error(err));
+  .then(() => {
+    console.log('✅ MongoDB Connected Successfully');
+    app.listen(process.env.PORT, () => console.log(`🚀 Server running on port ${process.env.PORT}`));
+  })
+  .catch(err => {
+    console.error('❌ MongoDB Connection Failed:', err.message);
+    process.exit(1);
+  });

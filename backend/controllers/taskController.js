@@ -23,7 +23,12 @@ exports.updateTask = async (req, res) => {
     const task = await Task.findOne({ _id: req.params.id, user: req.user._id });
     if (!task) return res.status(404).json({ message: 'Task not found' });
     const { title, description, status } = req.body;
-    Object.assign(task, { title, description, status });
+    const allowedStatus = ['Pending', 'Completed'];
+    if (status && !allowedStatus.includes(status))
+      return res.status(400).json({ message: 'Invalid status value' });
+    if (title) task.title = title.trim();
+    if (description !== undefined) task.description = description.trim();
+    if (status) task.status = status;
     await task.save();
     await ActivityLog.create({ user: req.user._id, action: 'TASK_UPDATED', details: `Task: ${task.title}` });
     res.json(task);
