@@ -3,7 +3,9 @@ const ActivityLog = require('../models/ActivityLog');
 
 exports.createTask = async (req, res) => {
   try {
-    const task = await Task.create({ ...req.body, user: req.user._id });
+    const { title, description } = req.body;
+    if (!title?.trim()) return res.status(400).json({ message: 'Title is required' });
+    const task = await Task.create({ title: title.trim(), description: description?.trim(), user: req.user._id });
     await ActivityLog.create({ user: req.user._id, action: 'TASK_CREATED', details: `Task: ${task.title}` });
     res.status(201).json(task);
   } catch (err) {
@@ -20,7 +22,8 @@ exports.updateTask = async (req, res) => {
   try {
     const task = await Task.findOne({ _id: req.params.id, user: req.user._id });
     if (!task) return res.status(404).json({ message: 'Task not found' });
-    Object.assign(task, req.body);
+    const { title, description, status } = req.body;
+    Object.assign(task, { title, description, status });
     await task.save();
     await ActivityLog.create({ user: req.user._id, action: 'TASK_UPDATED', details: `Task: ${task.title}` });
     res.json(task);
