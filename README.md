@@ -13,13 +13,12 @@ A full-stack role-based task management application with Admin dashboard, activi
 
 ## 🔗 Links
 
-| | URL |
-|---|---|
-| 🌐 Frontend Live | `https://your-frontend-url.vercel.app` |
-| ⚙️ Backend API | `https://your-backend-url.railway.app` |
-| 📁 GitHub Repo | `https://github.com/your-username/Avidus-Interactive` |
-| 🔀 Clone URL | `https://github.com/your-username/Avidus-Interactive.git` |
-| 🔃 Pull Request | `https://github.com/your-username/Avidus-Interactive/pull/1` |
+|                  | URL                                                                               |
+| ---------------- | --------------------------------------------------------------------------------- |
+| 🌐 Frontend Live | `https://avidus-interactive.vercel.app`                                           |
+| ⚙️ Backend API   | `https://avidus-interactive.onrender.com`                                         |
+| 📁 GitHub Repo   | `https://github.com/Shiakh0112/Avidus-Interactive/tree/feature/role-based-access` |
+| 🔀 Clone URL     | `https://github.com/Shiakh0112/Avidus-Interactive.git`                            |
 
 > ⚠️ Update these links after deployment.
 
@@ -28,28 +27,32 @@ A full-stack role-based task management application with Admin dashboard, activi
 ## 🔐 Demo Credentials
 
 ### Admin Account
-| Field | Value |
-|---|---|
-| Email | `admin@avidus.com` |
-| Password | `Admin@123` |
-| Role | Admin |
+
+| Field    | Value                       |
+| -------- | --------------------------- |
+| Email    | `khatikashfaq992@gmail.com` |
+| Password | `Shaikh0112`                |
+| Role     | Admin                       |
 
 ### User Account
-| Field | Value |
-|---|---|
-| Email | `user@avidus.com` |
-| Password | `User@123` |
-| Role | User |
+
+| Field    | Value                      |
+| -------- | -------------------------- |
+| Email    | `khanashfaq9423@gmail.com` |
+| Password | `shaikh0112`               |
+| Role     | User                       |
 
 ---
 
 ## ✨ Features
 
 ### Role-Based Access Control
+
 - **Admin** — Full access: manage users, view all tasks, activity logs, analytics
 - **User** — Restricted access: create, view, update, delete only their own tasks
 
 ### Backend
+
 - ✅ JWT Authentication (Register / Login)
 - ✅ Role-based middleware (`protect`, `adminOnly`)
 - ✅ User roles in schema — `Admin` / `User`
@@ -60,6 +63,7 @@ A full-stack role-based task management application with Admin dashboard, activi
 - ✅ Secure CORS configuration
 
 ### Frontend
+
 - ✅ Login & Register with role selection
 - ✅ User Dashboard — personal task CRUD
 - ✅ Admin Dashboard — User Management, Task Monitoring, Activity Logs
@@ -122,23 +126,27 @@ Avidus-Interactive/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js v18+
 - MongoDB Atlas account (or local MongoDB)
 - Git
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/your-username/Avidus-Interactive.git
 cd Avidus-Interactive
 ```
 
 ### 2. Backend Setup
+
 ```bash
 cd backend
 npm install
 ```
 
 Create `.env` file in `backend/`:
+
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_atlas_uri
@@ -146,11 +154,13 @@ JWT_SECRET=your_strong_secret_key
 ```
 
 Start backend:
+
 ```bash
 node server.js
 ```
 
 ### 3. Frontend Setup
+
 ```bash
 cd frontend
 npm install
@@ -165,29 +175,32 @@ Backend runs at: `http://localhost:5000`
 ## 📡 API Reference
 
 ### Auth Routes — `/api/auth`
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| POST | `/register` | Public | Register new user |
-| POST | `/login` | Public | Login & get JWT token |
+
+| Method | Endpoint    | Access | Description           |
+| ------ | ----------- | ------ | --------------------- |
+| POST   | `/register` | Public | Register new user     |
+| POST   | `/login`    | Public | Login & get JWT token |
 
 ### Task Routes — `/api/tasks`
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/` | User | Get own tasks |
-| POST | `/` | User | Create task |
-| PUT | `/:id` | User | Update own task |
-| DELETE | `/:id` | User | Delete own task |
+
+| Method | Endpoint | Access | Description     |
+| ------ | -------- | ------ | --------------- |
+| GET    | `/`      | User   | Get own tasks   |
+| POST   | `/`      | User   | Create task     |
+| PUT    | `/:id`   | User   | Update own task |
+| DELETE | `/:id`   | User   | Delete own task |
 
 ### Admin Routes — `/api/admin`
-| Method | Endpoint | Access | Description |
-|--------|----------|--------|-------------|
-| GET | `/stats` | Admin | Analytics data |
-| GET | `/users` | Admin | All users |
-| DELETE | `/users/:id` | Admin | Delete user |
-| PATCH | `/users/:id/status` | Admin | Toggle Active/Inactive |
-| GET | `/tasks` | Admin | All tasks |
-| DELETE | `/tasks/:id` | Admin | Delete any task |
-| GET | `/logs` | Admin | Activity logs |
+
+| Method | Endpoint            | Access | Description            |
+| ------ | ------------------- | ------ | ---------------------- |
+| GET    | `/stats`            | Admin  | Analytics data         |
+| GET    | `/users`            | Admin  | All users              |
+| DELETE | `/users/:id`        | Admin  | Delete user            |
+| PATCH  | `/users/:id/status` | Admin  | Toggle Active/Inactive |
+| GET    | `/tasks`            | Admin  | All tasks              |
+| DELETE | `/tasks/:id`        | Admin  | Delete any task        |
+| GET    | `/logs`             | Admin  | Activity logs          |
 
 ---
 
@@ -226,14 +239,14 @@ git push origin feature/role-based-access
 
 ## 🧰 Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React 18, Vite, React Router v6, React Icons |
-| Backend | Node.js, Express.js |
-| Database | MongoDB Atlas, Mongoose |
-| Auth | JWT, bcryptjs |
-| HTTP Client | Axios |
-| Styling | CSS-in-JS (inline styles) |
+| Layer       | Technology                                   |
+| ----------- | -------------------------------------------- |
+| Frontend    | React 18, Vite, React Router v6, React Icons |
+| Backend     | Node.js, Express.js                          |
+| Database    | MongoDB Atlas, Mongoose                      |
+| Auth        | JWT, bcryptjs                                |
+| HTTP Client | Axios                                        |
+| Styling     | CSS-in-JS (inline styles)                    |
 
 ---
 

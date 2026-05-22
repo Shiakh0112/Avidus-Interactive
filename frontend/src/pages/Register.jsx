@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { MdEmail, MdLock, MdPerson, MdShield, MdAdminPanelSettings } from 'react-icons/md';
+import { MdEmail, MdLock, MdPerson, MdShield, MdAdminPanelSettings, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 export default function Register() {
   const { register } = useAuth();
@@ -9,6 +9,7 @@ export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '', role: 'User' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,9 +43,12 @@ export default function Register() {
           <Field label="Email" icon={<MdEmail size={18} color="#94a3b8" />}>
             <input style={styles.input} type="email" placeholder="you@example.com" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required />
           </Field>
-          <Field label="Password" icon={<MdLock size={18} color="#94a3b8" />}>
-            <input style={styles.input} type="password" placeholder="••••••••" value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} required />
-          </Field>
+          <PasswordField
+            value={form.password}
+            onChange={e => setForm({ ...form, password: e.target.value })}
+            show={showPassword}
+            onToggle={() => setShowPassword(p => !p)}
+          />
 
           <div>
             <label style={styles.label}>Role</label>
@@ -73,6 +77,30 @@ export default function Register() {
   );
 }
 
+function PasswordField({ value, onChange, show, onToggle }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <label style={{ fontSize: '0.8rem', fontWeight: '600', color: '#374151' }}>Password</label>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+        <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }}>
+          <MdLock size={18} color="#94a3b8" />
+        </span>
+        <input
+          style={{ ...styles.input, paddingLeft: '36px', paddingRight: '40px' }}
+          type={show ? 'text' : 'password'}
+          placeholder="••••••••"
+          value={value}
+          onChange={onChange}
+          required
+        />
+        <button type="button" onClick={onToggle} style={styles.eyeBtn}>
+          {show ? <MdVisibilityOff size={18} color="#94a3b8" /> : <MdVisibility size={18} color="#94a3b8" />}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function Field({ label, icon, children }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -96,6 +124,7 @@ const styles = {
   form: { display: 'flex', flexDirection: 'column', gap: '18px' },
   label: { fontSize: '0.8rem', fontWeight: '600', color: '#374151', display: 'block', marginBottom: '6px' },
   input: { width: '100%', padding: '10px 12px', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '0.9rem', outline: 'none', color: '#0f172a', background: '#f8fafc' },
+  eyeBtn: { position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '2px' },
   roleGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' },
   roleBtn: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', padding: '10px', border: '2px solid #e2e8f0', borderRadius: '8px', background: '#f8fafc', cursor: 'pointer', fontWeight: '500', fontSize: '0.875rem', color: '#64748b', transition: 'all 0.15s' },
   roleBtnActive: { border: '2px solid #6366f1', background: '#e0e7ff', color: '#4f46e5' },

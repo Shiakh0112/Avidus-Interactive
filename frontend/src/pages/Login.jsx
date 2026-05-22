@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { MdEmail, MdLock, MdShield } from 'react-icons/md';
+import { MdEmail, MdLock, MdShield, MdVisibility, MdVisibilityOff } from 'react-icons/md';
 
 export default function Login() {
   const { login } = useAuth();
@@ -9,6 +9,7 @@ export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,12 +43,12 @@ export default function Login() {
               value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} required
             />
           </Field>
-          <Field label="Password" icon={<MdLock size={18} color="#94a3b8" />}>
-            <input
-              style={styles.input} type="password" placeholder="••••••••"
-              value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} required
-            />
-          </Field>
+          <PasswordField
+            value={form.password}
+            onChange={e => setForm({ ...form, password: e.target.value })}
+            show={showPassword}
+            onToggle={() => setShowPassword(p => !p)}
+          />
           <button style={{ ...styles.btn, opacity: loading ? 0.7 : 1 }} type="submit" disabled={loading}>
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
@@ -73,6 +74,30 @@ function Field({ label, icon, children }) {
   );
 }
 
+function PasswordField({ value, onChange, show, onToggle }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+      <label style={{ fontSize: '0.8rem', fontWeight: '600', color: '#374151' }}>Password</label>
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+        <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }}>
+          <MdLock size={18} color="#94a3b8" />
+        </span>
+        <input
+          style={{ ...styles.input, paddingLeft: '36px', paddingRight: '40px' }}
+          type={show ? 'text' : 'password'}
+          placeholder="••••••••"
+          value={value}
+          onChange={onChange}
+          required
+        />
+        <button type="button" onClick={onToggle} style={styles.eyeBtn}>
+          {show ? <MdVisibilityOff size={18} color="#94a3b8" /> : <MdVisibility size={18} color="#94a3b8" />}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 const styles = {
   page: { minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(135deg, #e0e7ff 0%, #f8fafc 50%, #fce7f3 100%)', padding: '20px' },
   card: { background: '#fff', borderRadius: '16px', boxShadow: '0 8px 32px rgba(0,0,0,0.12)', padding: '40px', width: '100%', maxWidth: '400px' },
@@ -83,6 +108,7 @@ const styles = {
   error: { background: '#fef2f2', border: '1px solid #fecaca', color: '#dc2626', padding: '10px 14px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px' },
   form: { display: 'flex', flexDirection: 'column', gap: '18px' },
   input: { width: '100%', padding: '10px 12px', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '0.9rem', outline: 'none', color: '#0f172a', background: '#f8fafc' },
+  eyeBtn: { position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '2px' },
   btn: { padding: '12px', background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem', marginTop: '4px' },
   footer: { textAlign: 'center', marginTop: '20px', fontSize: '0.875rem', color: '#64748b' },
   link: { color: '#6366f1', fontWeight: '600', textDecoration: 'none' },
